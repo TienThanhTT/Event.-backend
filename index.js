@@ -35,6 +35,9 @@ app.use(cookieParser());
 app.use(express.json());
 
 // route
+app.get("/", (req, res) => {
+  res.send("hello from server");
+});
 app.use("/", authRoute);
 app.use("/event", eventRoute);
 app.use("/group", groupRoute);
