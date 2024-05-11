@@ -8,7 +8,7 @@ const groupRoute = require("./Routes/GroupRoute");
 const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
-const { MONGODB_URL, PORT } = process.env;
+const { MONGODB_URL, PORT } = process.env || 4000;
 
 // connect database
 mongoose
