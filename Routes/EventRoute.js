@@ -13,7 +13,7 @@ const router = require("express").Router();
 router.post("/create", Create);
 
 router.post("/upload_image", upload.single("image"), UploadImage);
-router.post("/get_event", GetEvent);
+router.get("/get_event", GetEvent);
 router.post("/get_detail", GetEventDetail);
 router.post("/join_event", UserJoinEvent);
 
