@@ -70,7 +70,6 @@ module.exports.Login = async (req, res, next) => {
 
     const token = createSecretToken(user._id);
     res.cookie("access_token", token, {
-      withCredentials: true,
       httpOnly: false,
     });
     res
