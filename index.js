@@ -25,6 +25,7 @@ app.listen(PORT, () => {
 app.use(
   cors({
     origin: "https://eventdot.netlify.app",
+    credentials: true,
     // origin: ["https://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
