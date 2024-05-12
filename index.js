@@ -27,7 +27,7 @@ app.use(
     origin: ["https://eventdot.netlify.app/"],
     // origin: ["https://localhost:3000/"],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    // credentials: true,
+    credentials: true,
     optionsSuccessStatus: 200,
   })
 );
