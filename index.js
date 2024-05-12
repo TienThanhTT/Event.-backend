@@ -30,7 +30,8 @@ app.use(
   })
 );
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://eventdot.netlify.app");
+  // res.setHeader("Access-Control-Allow-Origin", "https://eventdot.netlify.app");
+  res.setHeader("Access-Control-Allow-Origin", "https://localhost:3000");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,CONNECT,TRACE"
