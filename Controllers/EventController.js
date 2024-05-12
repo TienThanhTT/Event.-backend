@@ -1,5 +1,5 @@
 const Event = require("../Models/EventModel");
-const multer = require("multer");
+const cloudinary = require("../util/Cloudinary");
 
 module.exports.Create = async (req, res) => {
   try {
@@ -78,43 +78,21 @@ module.exports.UserJoinEvent = async (req, res) => {
   }
 };
 
-// module.exports.Upload = async (req, res) => {
-//   if (!req.files) {
-//     return res.json({
-//       success: false,
-//       message: "No files to upload",
-//     });
-//   }
-
-//   let sampleFile = req.files.sampleFile;
-//   let uploadPath = __dirname + "/uploads/" + sampleFile.name;
-
-//   sampleFile.mv(uploadPath, (err) => {
-//     if (err) {
-//       res.json({
-//         success: false,
-//         message: "Upload fail",
-//       });
-//     }
-//   });
-// };
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Change 'uploads/' to your desired directory
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now();
-    cb(null, uniqueSuffix + file.originalname);
-  },
-});
-
-const upload = multer({ storage });
-
-module.exports.UploadImage = async (req, res) => {
-  upload.single("image");
-  console.log(req.body);
-  const imageName = req.file.filename;
+module.exports.UploadImage = function (req, res) {
+  cloudinary.uploader.upload(req.file.path, function (err, result) {
+    if (err) {
+      console.log(err);
+      res.json({
+        success: false,
+        message: "Upload image fail",
+      });
+    }
+    res.json({
+      success: true,
+      message: "Uploaded",
+      url: result.url,
+    });
+  });
 };
 
 module.exports.GetEvent = async (req, res) => {
