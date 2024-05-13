@@ -10,7 +10,7 @@ const upload = require("../Middlewares/multer");
 
 const router = require("express").Router();
 
-router.post("/create", upload.single("image"), Create);
+router.post("/create", Create);
 
 router.post("/upload_image", upload.single("image"), UploadImage);
 router.get("/get_event", GetEvent);
