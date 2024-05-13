@@ -26,14 +26,14 @@ app.use(
   cors({
     // origin: "https://eventdot.netlify.app",
 
-    origin: "http://localhost:3000/",
+    origin: "http://localhost:3000",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 app.use((req, res, next) => {
   // res.setHeader("Access-Control-Allow-Origin", "https://eventdot.netlify.app");
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000/");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,CONNECT,TRACE"
