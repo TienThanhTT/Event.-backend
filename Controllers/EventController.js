@@ -1,55 +1,47 @@
 const Event = require("../Models/EventModel");
 const cloudinary = require("../util/Cloudinary");
+const upload = require("../Middlewares/multer");
 
 module.exports.Create = async (req, res) => {
   try {
-    cloudinary.uploader.upload(req.file.path, async function (err, result) {
-      if (err) {
-        console.log(err);
-        res.json({
-          success: false,
-          message: "Upload image fail",
-        });
-      }
-      const banner = result.url;
-      const {
-        title,
-        description,
-        category,
-        date,
-        location,
-        startTime,
-        endTime,
-        owner,
-        groups,
-        soloParticipants,
-        createdAt,
-      } = req.body;
+    const {
+      title,
+      description,
+      category,
+      date,
+      banner,
+      location,
+      startTime,
+      endTime,
+      owner,
+      groups,
+      soloParticipants,
+      createdAt,
+    } = req.body;
 
-      if (!title || !description || !startTime) {
-        res.json({ success: false, message: "Not enough information" });
-      }
+    if (!title || !description || !startTime) {
+      res.json({ success: false, message: "Not enough information" });
+    }
 
-      const event = await Event.create({
-        title,
-        description,
-        category,
-        date,
-        banner,
-        location,
-        startTime,
-        endTime,
-        owner,
-        groups,
-        soloParticipants,
-        createdAt,
-      });
+    const event = await Event.create({
+      title,
+      description,
+      category,
+      date,
+      banner,
+      location,
+      startTime,
+      endTime,
+      owner,
+      groups,
+      soloParticipants,
+      createdAt,
+    });
 
-      res.status(201).json({
-        success: true,
-        message: "Create event successfully!",
-        event,
-      });
+    res.status(201).json({
+      success: true,
+      message: "Create event successfully!",
+      event,
     });
   } catch (error) {
     console.log(error);
@@ -87,7 +79,7 @@ module.exports.UserJoinEvent = async (req, res) => {
   }
 };
 
-module.exports.UploadImage = function (req, res) {
+module.exports.UploadImage = async (req, res) => {
   cloudinary.uploader.upload(req.file.path, function (err, result) {
     if (err) {
       console.log(err);
@@ -99,7 +91,7 @@ module.exports.UploadImage = function (req, res) {
     res.json({
       success: true,
       message: "Uploaded",
-      url: result.url,
+      data: result.url,
     });
   });
 };
