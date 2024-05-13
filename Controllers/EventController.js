@@ -64,12 +64,12 @@ module.exports.UserJoinEvent = async (req, res) => {
   } else {
     const existEvent = Event.findOne({
       _id: eventId,
-      soloParticipants: userId,
     });
     if (existEvent) {
       res.json({
         success: false,
         message: "Bạn đã đăng ký tham gia sự kiện này!",
+        existEvent,
       });
     } else {
       const event = await Event.updateOne(filter, userUpdate);
