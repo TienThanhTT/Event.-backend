@@ -63,7 +63,7 @@ module.exports.UserJoinEvent = async (req, res) => {
     });
   } else {
     const existEvent = Event.findOne({
-      _id: mongoose.Types.ObjectId(eventId),
+      _id: eventId,
       soloParticipants: userId,
     });
     if (existEvent) {
