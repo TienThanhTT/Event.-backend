@@ -55,7 +55,7 @@ module.exports.UserJoinEvent = async (req, res) => {
   const userUpdate = { $push: { soloParticipants: userId } };
   // const groupUdate = { $push: { groups: groupId } };
 
-  const existEvent = Event.findOne({ soloParticipants: userId });
+  const existEvent = Event.findOne({ userId: { $in: soloParticipants } });
 
   if (!userId) {
     res.json({
