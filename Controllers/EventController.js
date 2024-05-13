@@ -1,6 +1,7 @@
 const Event = require("../Models/EventModel");
 const cloudinary = require("../util/Cloudinary");
 const upload = require("../Middlewares/multer");
+const { default: mongoose } = require("mongoose");
 
 module.exports.Create = async (req, res) => {
   try {
@@ -61,7 +62,10 @@ module.exports.UserJoinEvent = async (req, res) => {
       message: "Missing data",
     });
   } else {
-    const existEvent = Event.find({ _id: eventId, soloParticipants: userId });
+    const existEvent = Event.findOne({
+      _id: mongoose.Types.ObjectId(eventId),
+      soloParticipants: userId,
+    });
     if (existEvent) {
       res.json({
         success: false,
