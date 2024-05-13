@@ -55,7 +55,7 @@ module.exports.UserJoinEvent = async (req, res) => {
   const userUpdate = { $push: { soloParticipants: userId } };
   // const groupUdate = { $push: { groups: groupId } };
 
-  const existEvent = Event.findOne({ userId: { $in: soloParticipants } });
+  const existEvent = Event.findOne({ soloParticipants: { $in: [userId] } });
 
   if (!userId) {
     res.json({
@@ -72,7 +72,7 @@ module.exports.UserJoinEvent = async (req, res) => {
       const event = await Event.updateOne(filter, userUpdate);
       res.json({
         success: true,
-        message: "User join event successfully!",
+        message: "Đăng ký tham gia thành công!",
         event,
       });
     }
