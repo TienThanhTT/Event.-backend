@@ -176,31 +176,23 @@ module.exports.UserJoinEvent = async (req, res) => {
       {}
     );
 
-    const isOwner = await Event.find({ owner: userId });
-    if (isOwner.length !== 0) {
+    if (existEvent.length !== 0) {
       res.json({
         success: false,
-        message: "Lỗi! Bạn là người tổ chức sự kiện này!",
+        message: "Lỗi! Bạn đã đăng ký tham gia sự kiện này!",
       });
     } else {
-      if (existEvent.length !== 0) {
+      const event = await Event.updateOne(filter, userUpdate);
+      if (!event) {
         res.json({
           success: false,
-          message: "Lỗi! Bạn đã đăng ký tham gia sự kiện này!",
-        });
-      } else {
-        const event = await Event.updateOne(filter, userUpdate);
-        if (!event) {
-          res.json({
-            success: false,
-            message: "Fail!",
-          });
-        }
-        res.json({
-          success: true,
-          message: "Đăng ký tham gia thành công!",
+          message: "Fail!",
         });
       }
+      res.json({
+        success: true,
+        message: "Đăng ký tham gia thành công!",
+      });
     }
   } catch (error) {
     console.log(error);
