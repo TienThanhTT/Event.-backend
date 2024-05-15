@@ -11,7 +11,6 @@ const eventSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    required: [true, "Category is required"],
   },
   date: {
     type: Date,

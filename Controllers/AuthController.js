@@ -103,33 +103,58 @@ module.exports.deleteUser = async (req, res, next) => {
 
 module.exports.updateUser = async (req, res, next) => {
   try {
-    const { id, newEmail, newUsername } = req.body;
+    const { id, newEmail, newUsername, newPhone, newAddress, newAvatar } =
+      req.body;
 
-    const user = User.findById(id);
-    if (!user) {
-      res.json({ success: false, message: "Update fail, Can't find user" });
+    // Check if the required fields are present
+    if (!id) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User ID is required" });
     }
 
-    const filter = {
-      _id: id,
-    };
-    const updateQuery = {
-      email: newEmail,
-      username: newUsername,
-    };
+    // Check if user exists
+    const user = await User.findById(id);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
 
-    const updateUser = await user.findOneAndUpdate(filter, updateQuery, {
+    // Prepare update object
+    const updateQuery = {};
+    if (newEmail) updateQuery.email = newEmail;
+    if (newUsername) updateQuery.username = newUsername;
+    if (newPhone) updateQuery.phone = newPhone;
+    if (newAddress) updateQuery.address = newAddress;
+    if (newAvatar) updateQuery.avatar = newAvatar;
+
+    // Check if there are fields to update
+    if (Object.keys(updateQuery).length === 0) {
+      return res
+        .status(400)
+        .json({ success: false, message: "No data provided to update" });
+    }
+
+    // Update user
+    const updatedUser = await User.findByIdAndUpdate(id, updateQuery, {
       new: true,
     });
-    if (updateUser) {
-      res.json({ success: true, message: "Update successfully" });
-    } else {
-      res.json({ success: false, message: "Update fail" });
-    }
 
-    res.json({ success: true, message: "Update successfully" });
+    if (updatedUser) {
+      return res.status(200).json({
+        success: true,
+        message: "Cập nhật thông tin thành công!",
+        user: updatedUser,
+      });
+    } else {
+      return res
+        .status(500)
+        .json({ success: false, message: "Cập nhật thông tin thất bại!" });
+    }
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({ success: false, message: "Lỗi sever" });
   }
 };
 

@@ -14,8 +14,8 @@ const router = require("express").Router();
 router.post("/", userVerification);
 router.post("/signup", Signup);
 router.post("/login", Login);
-router.post("/deleteUser", adminAuth, deleteUser);
-router.post("/updateUser", adminAuth, updateUser);
-router.get("/getUser", getUser);  
+router.post("/delete_user", adminAuth, deleteUser);
+router.post("/update_user", updateUser);
+router.get("/getUser", getUser);
 
 module.exports = router;

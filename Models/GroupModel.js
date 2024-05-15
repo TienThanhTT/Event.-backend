@@ -5,10 +5,6 @@ const groupSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  description: {
-    type: String,
-    required: false,
-  },
   leader: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -16,7 +12,7 @@ const groupSchema = new mongoose.Schema({
   members: [
     {
       name: { type: String },
-      phoneNumber: {
+      phone: {
         type: String,
       },
       email: {
