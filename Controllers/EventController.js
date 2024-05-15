@@ -237,14 +237,15 @@ module.exports.GetUserOwnedEvents = async (req, res) => {
         success: false,
         message: "Không tìm thấy sự kiện nào",
       });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: "Events fetched successfully",
+        events,
+      });
     }
 
     // Return the events
-    return res.status(200).json({
-      success: true,
-      message: "Events fetched successfully",
-      events,
-    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({
